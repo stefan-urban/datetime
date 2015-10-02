@@ -63,7 +63,7 @@ class DateTime
         $timestampDateTime = new \DateTime();
         $timestampDateTime->setTimestamp($this->timestamp);
         
-        $time = $timestampDateTime->format('Y-m-d H:i:s') . '.' . $this->microseconds;
+        $time = $timestampDateTime->format('Y-m-d H:i:s') . '.' . str_pad($this->microseconds, 6, "0", STR_PAD_LEFT);
         
         return \DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
     }
@@ -85,6 +85,12 @@ class DateTime
     public function getTimestamp()
     {
         return $this->timestamp + $this->microseconds / 1000 / 1000;
+    }
+    
+    public function setTimestamp($timestamp)
+    {
+        $this->timestamp = floor($timestamp);
+        $this->microseconds = round(($timestamp - floor($timestamp)) * 1000 * 1000);
     }
     
     public function diff(DateTime $datetime)

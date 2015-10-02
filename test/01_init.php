@@ -27,7 +27,7 @@ echo "\n";
 
 
 // Specific point in time from static constructor
-$time = '2012-08-22 14:21:58.222114';
+$time = '2012-08-22 14:21:58.023114';
 $dt = \StefanUrban\DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
 
 echo "\n\n" . 'test #3: (init with static function)';

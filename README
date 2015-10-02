@@ -1,0 +1,6 @@
+DateTime
+========
+
+Custom DateTime implementation that tries to roughly mimic PHP's DateTime
+objects. There are (by far) not all functions implemented, especially the
+timezone support is missing.

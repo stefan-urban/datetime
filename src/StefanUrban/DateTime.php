@@ -23,12 +23,13 @@ class DateTime
      */
     public function __construct($time = "now", $timezone = null)
     {
-        list($timestamp, $microseconds) = explode('.', microtime(true));
-        
         if ($time == "now")
         {
+            $mcTime = microtime(true);
+            list($timestamp, $microseconds) = explode('.', $mcTime);
+            
             $this->timestamp = $timestamp;
-            $this->microseconds = $microseconds;
+            $this->microseconds = str_pad($microseconds, 6, "0", STR_PAD_RIGHT);
         }
         elseif (is_string($time))
         {
@@ -62,6 +63,8 @@ class DateTime
     {
         $timestampDateTime = new \DateTime();
         $timestampDateTime->setTimestamp($this->timestamp);
+        
+        var_dump($this->microseconds);
         
         $time = $timestampDateTime->format('Y-m-d H:i:s') . '.' . str_pad($this->microseconds, 6, "0", STR_PAD_LEFT);
         

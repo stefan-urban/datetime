@@ -15,9 +15,15 @@ class DateInterval
     
     public function format($format)
     {
-        // First part
-        $dt = new \DateInterval('PT' . floor($this->seconds) . 'S');
-        $formattedString = $dt->format($format);
+        // http://php.net/manual/de/class.dateinterval.php#102930
+        $d1 = new DateTime();
+        $d2 = new DateTime();
+        $d2->add(new DateInterval('PT' . floor($this->seconds) . 'S'));
+
+        $iv = $d2->diff($d1);
+
+        // Format all known values
+        $formattedString = $iv->format($format);
         
         // Replace microseconds in formatted string
         $microseconds = round(($this->seconds - floor($this->seconds)) * 1000 * 1000);

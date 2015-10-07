@@ -32,4 +32,18 @@ class DateInterval
     {
         return $this->seconds;
     }
+
+    public function __get($name)
+    {
+        switch ($name)
+        {
+            default:
+                throw new \Exception('Property "' . $name . '" on ' . __CLASS__ . ' not found.');
+                break;
+
+            // Overall number of days
+            case 'days':
+                return floor(abs($this->seconds) / 24 / 60 / 60);
+        }
+    }
 }

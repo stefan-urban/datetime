@@ -16,9 +16,9 @@ class DateInterval
     public function format($format)
     {
         // http://php.net/manual/de/class.dateinterval.php#102930
-        $d1 = new DateTime();
-        $d2 = new DateTime();
-        $d2->add(new DateInterval('PT' . floor($this->seconds) . 'S'));
+        $d1 = new \DateTime();
+        $d2 = new \DateTime();
+        $d2->add(new \DateInterval('PT' . floor($this->seconds) . 'S'));
 
         $iv = $d2->diff($d1);
 

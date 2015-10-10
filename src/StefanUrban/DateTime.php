@@ -26,10 +26,12 @@ class DateTime
         if ($time == "now")
         {
             $mcTime = microtime(true);
-            list($timestamp, $microseconds) = explode('.', $mcTime);
+            
+            $timestamp = floor($mcTime);
+            $microseconds = round(($mcTime - $timestamp) * 1000 * 1000);
 
             $this->timestamp = $timestamp;
-            $this->microseconds = str_pad($microseconds, 6, "0", STR_PAD_RIGHT);
+            $this->microseconds = $microseconds;
         }
         elseif (is_string($time))
         {

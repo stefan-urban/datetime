@@ -68,7 +68,14 @@ class DateTime
 
         $time = $timestampDateTime->format('Y-m-d H:i:s') . '.' . str_pad($this->microseconds, 6, "0", STR_PAD_LEFT);
 
-        return \DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
+        $ret = \DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
+        
+        if ($ref === false)
+        {
+            throw new \Exception("Input format error!");
+        }
+        
+        return $ret;
     }
 
     public static function createFromFormat($format, $time, $timezone = null)

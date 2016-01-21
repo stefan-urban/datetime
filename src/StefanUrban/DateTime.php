@@ -72,7 +72,7 @@ class DateTime
         
         if ($ret === false)
         {
-            throw new \Exception("Input format error!");
+            throw new \Exception("Input format error! Timestamp: " . $this->timestamp . ' us: ' . $this->microseconds);
         }
         
         return $ret;

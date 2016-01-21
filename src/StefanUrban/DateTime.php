@@ -70,7 +70,7 @@ class DateTime
 
         $ret = \DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
         
-        if ($ref === false)
+        if ($ret === false)
         {
             throw new \Exception("Input format error!");
         }

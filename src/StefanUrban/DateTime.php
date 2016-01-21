@@ -6,7 +6,7 @@ use StefanUrban\DateInterval;
 
 /**
  * Custom DateTime class that supports microseconds better
- * 
+ *
  * - does not implement all of PHP \DateTime object's methods
  * - especially no timezone support
  */
@@ -17,7 +17,7 @@ class DateTime
     private $microseconds;
 
     /**
-     * 
+     *
      * @param type $time: supports only format: Y-m-d H:i:s.u
      * @param type $timezone
      */
@@ -26,7 +26,7 @@ class DateTime
         if ($time == "now")
         {
             $mcTime = microtime(true);
-            
+
             $timestamp = floor($mcTime);
             $microseconds = round(($mcTime - $timestamp) * 1000 * 1000);
 
@@ -68,14 +68,7 @@ class DateTime
 
         $time = $timestampDateTime->format('Y-m-d H:i:s') . '.' . str_pad($this->microseconds, 6, "0", STR_PAD_LEFT);
 
-        $ret = \DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
-        
-        if ($ret === false)
-        {
-            throw new \Exception("Input format error! Timestamp: " . $this->timestamp . ' us: ' . $this->microseconds);
-        }
-        
-        return $ret;
+        return \DateTime::createFromFormat('Y-m-d H:i:s.u', $time);
     }
 
     public static function createFromFormat($format, $time, $timezone = null)
@@ -117,6 +110,15 @@ class DateTime
         $this->timestamp += floor($seconds);
         $this->microseconds += round(($seconds - floor($seconds)) * 1000 * 1000);
 
+
+        if ($this->microseconds > (1000 * 1000))
+        {
+          $times = floor($this->microseconds / (1000 * 1000));
+
+          $this->timestamp += $times;
+          $this->microseconds = $this->microseconds % (1000 * 1000);
+        }
+
         return $this;
     }
 
@@ -126,6 +128,14 @@ class DateTime
 
         $this->timestamp -= floor($seconds);
         $this->microseconds -= ($seconds - floor($seconds)) * 1000 * 1000;
+
+        if ($this->microseconds < 0)
+        {
+          $times = -1 * floor($this->microseconds / (1000 * 1000));
+
+          $this->timestamp -= $times;
+          $this->microseconds = $this->microseconds % (1000 * 1000) + (1000 * 1000);
+        }
 
         return $this;
     }
